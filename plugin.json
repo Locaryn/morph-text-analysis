@@ -2,36 +2,68 @@
   "$schema": "https://locaryn.dev/schema/plugin.json/v0.1",
   "apiVersion": "0.1",
   "name": "plugin-text-analysis",
-  "version": "1.0.0",
-  "description": "Text analysis, sentiment classification, NER and batch processing extension.",
+  "version": "1.1.0",
+  "description": "Analyse de texte, classification de sentiment, extraction d'entités (NER) et traitements par lots (Batch API).",
   "author": "Locaryn Team",
   "license": "Apache-2.0",
   "homepage": "https://github.com/Locaryn/plugin-text-analysis",
   "repository": "https://github.com/Locaryn/plugin-text-analysis",
-  "keywords": ["text-analysis", "sentiment", "ner", "batch-processing"],
+  "keywords": [
+    "text-analysis",
+    "sentiment",
+    "ner",
+    "classification",
+    "batch-processing"
+  ],
   "permissions": {
-    "files_read": true,
-    "files_write": true
+    "mcp": {
+      "reason": "Lancer le moteur d'analyse sémantique et textuelle."
+    },
+    "files.read": {
+      "reason": "Lire les corpus de texte et documents à analyser."
+    },
+    "files.write": {
+      "reason": "Exporter les rapports d'analyse et résultats batch."
+    }
   },
-  "capabilities": ["text-analysis"],
+  "components": {
+    "skills": [
+      "SKILL.md"
+    ],
+    "mcp": "mcp/mcp.json"
+  },
+  "capabilities": [
+    "text-analysis"
+  ],
   "ui_contributions": {
+    "slots": [
+      {
+        "id": "text-analysis-catalog",
+        "slot": "marketplace.catalogs",
+        "order": 13,
+        "type": "data",
+        "label": "Modèles d'analyse de texte",
+        "icon": "chart",
+        "entry": "dist/marketplace.json",
+        "hint": "Ajoute les modèles d'analyse et classification au catalogue"
+      },
+      {
+        "id": "text-analysis-studio",
+        "slot": "studio.tabs",
+        "order": 13,
+        "label": "Analyse texte",
+        "icon": "chart",
+        "type": "custom-element",
+        "entry": "dist/ui.js",
+        "tag": "locaryn-text-analysis-panel",
+        "hint": "Classification de sentiment et extraction d'entités"
+      }
+    ],
     "nav_items": [
       {
         "id": "studio",
         "label": "Studio de génération",
         "icon": "image"
-      },
-      {
-        "id": "batch",
-        "label": "Batch API (-50%)",
-        "icon": "speed"
-      }
-    ],
-    "studio_tabs": [
-      {
-        "id": "text-analysis",
-        "label": "Analyse texte",
-        "icon": "chart"
       }
     ]
   }

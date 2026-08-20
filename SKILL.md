@@ -1,8 +1,8 @@
 ---
 name: text-analysis
-description: Perform sentiment analysis, entity extraction, and batch jobs on text datasets.
+description: Analyse de sentiment, extraction d'entités (NER) et classification sémantique de texte.
 ---
 
-# Text Analysis Skill
+# Compétence Analyse de Texte
 
-Use `analyze_sentiment` when analyzing user feedback, log content, or dataset texts.
+Utilisez `analyze_sentiment` et `extract_entities` pour extraire des signaux sémantiques de retours clients ou documents.

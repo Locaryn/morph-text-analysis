@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "refreshUrl": "https://raw.githubusercontent.com/Locaryn/plugin-text-analysis/main/dist/marketplace.json",
+  "owns": [
+    "modernbert",
+    "roberta",
+    "deberta"
+  ],
+  "categories": [
+    {
+      "id": "text-analysis",
+      "label": "Analyse de texte",
+      "icon": "chart",
+      "matches": [
+        "text-analysis"
+      ],
+      "requires": [
+        "text-analysis"
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "modernbert-base",
+      "name": "ModernBERT Base",
+      "brand": "Answer.AI",
+      "description": "Modèle d'analyse et d'embedding ultra-rapide optimisé pour contextes 8k.",
+      "license": "Apache-2.0",
+      "releaseDate": "2024-12-18",
+      "releaseYear": 2024,
+      "capabilities": [
+        "text-analysis"
+      ],
+      "variants": [
+        {
+          "size": "ONNX · 149M",
+          "params": 0.15,
+          "storageGb": 0.3,
+          "quants": [
+            "fp16"
+          ],
+          "tag": "https://huggingface.co/answerdotai/ModernBERT-base/resolve/main/model.onnx",
+          "downloads": []
+        }
+      ]
+    }
+  ]
+}
