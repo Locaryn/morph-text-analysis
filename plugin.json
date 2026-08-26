@@ -1,13 +1,13 @@
 {
   "$schema": "https://locaryn.dev/schema/plugin.json/v0.1",
   "apiVersion": "0.1",
-  "name": "plugin-text-analysis",
+  "name": "extension-text-analysis",
   "version": "1.1.0",
   "description": "Analyse de texte, classification de sentiment, extraction d'entités (NER) et traitements par lots (Batch API).",
   "author": "Locaryn Team",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/Locaryn/plugin-text-analysis",
-  "repository": "https://github.com/Locaryn/plugin-text-analysis",
+  "homepage": "https://github.com/Locaryn/extension-text-analysis",
+  "repository": "https://github.com/Locaryn/extension-text-analysis",
   "keywords": [
     "text-analysis",
     "sentiment",
