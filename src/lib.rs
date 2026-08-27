@@ -35,13 +35,14 @@ pub async fn analyze_sentiment(req: SentimentRequest) -> Result<SentimentResult,
         return Err("Texte vide : rien à analyser".into());
     }
     let lower = req.text.to_lowercase();
-    let sentiment = if lower.contains("super") || lower.contains("excellent") || lower.contains("merci") {
-        "positif"
-    } else if lower.contains("bug") || lower.contains("erreur") || lower.contains("mauvais") {
-        "négatif"
-    } else {
-        "neutre"
-    };
+    let sentiment =
+        if lower.contains("super") || lower.contains("excellent") || lower.contains("merci") {
+            "positif"
+        } else if lower.contains("bug") || lower.contains("erreur") || lower.contains("mauvais") {
+            "négatif"
+        } else {
+            "neutre"
+        };
 
     Ok(SentimentResult {
         sentiment: sentiment.into(),
@@ -54,14 +55,14 @@ pub async fn analyze_sentiment(req: SentimentRequest) -> Result<SentimentResult,
     })
 }
 
-pub async fn extract_entities(req: EntityExtractRequest) -> Result<EntityExtractResult, String> {
+/// ATTENTION : implémentation factice. La requête est ignorée et le résultat
+/// est une valeur fixe. Rien n'analyse le texte pour l'instant.
+pub async fn extract_entities(_req: EntityExtractRequest) -> Result<EntityExtractResult, String> {
     Ok(EntityExtractResult {
-        entities: vec![
-            ExtractedEntity {
-                text: "Locaryn".into(),
-                label: "ORGANIZATION".into(),
-                confidence: 0.99,
-            }
-        ]
+        entities: vec![ExtractedEntity {
+            text: "Locaryn".into(),
+            label: "ORGANIZATION".into(),
+            confidence: 0.99,
+        }],
     })
 }
