@@ -30,39 +30,22 @@ pub struct EntityExtractResult {
     pub entities: Vec<ExtractedEntity>,
 }
 
-pub async fn analyze_sentiment(req: SentimentRequest) -> Result<SentimentResult, String> {
-    if req.text.trim().is_empty() {
-        return Err("Texte vide : rien à analyser".into());
-    }
-    let lower = req.text.to_lowercase();
-    let sentiment =
-        if lower.contains("super") || lower.contains("excellent") || lower.contains("merci") {
-            "positif"
-        } else if lower.contains("bug") || lower.contains("erreur") || lower.contains("mauvais") {
-            "négatif"
-        } else {
-            "neutre"
-        };
-
-    Ok(SentimentResult {
-        sentiment: sentiment.into(),
-        score: 0.92,
-        breakdown: vec![
-            ("positif".into(), 0.92),
-            ("neutre".into(), 0.05),
-            ("négatif".into(), 0.03),
-        ],
-    })
+/// Non implemente. La signature est conservee pour que l'interface et le
+/// serveur MCP gardent leur forme, mais l'appel echoue franchement plutot
+/// que de fabriquer un resultat.
+pub async fn analyze_sentiment(_req: SentimentRequest) -> Result<SentimentResult, String> {
+    Err(
+        "L'analyse de sentiment n'est pas implementee : ce morph n'analyse pas le texte recu."
+            .into(),
+    )
 }
 
-/// ATTENTION : implémentation factice. La requête est ignorée et le résultat
-/// est une valeur fixe. Rien n'analyse le texte pour l'instant.
+/// Non implemente. La signature est conservee pour que l'interface et le
+/// serveur MCP gardent leur forme, mais l'appel echoue franchement plutot
+/// que de fabriquer un resultat.
 pub async fn extract_entities(_req: EntityExtractRequest) -> Result<EntityExtractResult, String> {
-    Ok(EntityExtractResult {
-        entities: vec![ExtractedEntity {
-            text: "Locaryn".into(),
-            label: "ORGANIZATION".into(),
-            confidence: 0.99,
-        }],
-    })
+    Err(
+        "L'extraction d'entites n'est pas implementee : ce morph n'analyse pas le texte recu."
+            .into(),
+    )
 }
