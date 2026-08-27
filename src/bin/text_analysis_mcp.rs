@@ -1,4 +1,4 @@
-//! Stdio MCP server shipped by plugin-text-analysis.
+//! Stdio MCP server shipped by morph-text-analysis.
 use locaryn_plugin_text_analysis::{analyze_sentiment, extract_entities, EntityExtractRequest, SentimentRequest};
 use serde_json::{json, Value};
 use std::io::Write;
@@ -29,7 +29,7 @@ async fn handle_request(request: Value) -> Value {
         "initialize" => success(id, json!({
             "protocolVersion": "2025-06-18",
             "capabilities": { "tools": {} },
-            "serverInfo": { "name": "plugin-text-analysis", "version": VERSION }
+            "serverInfo": { "name": "morph-text-analysis", "version": VERSION }
         })),
         "tools/list" => success(id, tools_list()),
         "tools/call" => {
