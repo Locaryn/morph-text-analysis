@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "text-analysis": {
-      "command": "${LOCARYN_PLUGIN_ROOT}/bin/locaryn-text-analysis-mcp",
+      "command": "${LOCARYN_MORPH_ROOT}/bin/locaryn-text-analysis-mcp",
       "args": [],
       "env": {
         "RUST_LOG": "warn"
