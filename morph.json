@@ -2,8 +2,8 @@
   "$schema": "https://locaryn.dev/schema/morph.json/v0.1",
   "apiVersion": "0.1",
   "name": "morph-text-analysis",
-  "version": "2.1.0-beta.1",
-  "description": "NON FONCTIONNEL (squelette d'API) — Analyse de texte, classification de sentiment, extraction d'entités (NER) et traitements par lots (Batch API). Aucun moteur n'est embarqué : les appels échouent explicitement au lieu de fabriquer un résultat.",
+  "version": "2.2.0",
+  "description": "Analyse de texte : classification de tonalité par le modèle de langage local (fonctionnelle). L'extraction d'entités (NER) n'est pas implémentée et échoue explicitement plutôt que de fabriquer un résultat. Ce morph ne fournit pas de traitement par lots — sa capacité déclenche seulement l'affichage de la vue native « Batch API », dont la soumission réelle reste elle aussi à implémenter côté hôte.",
   "author": "Locaryn Team",
   "license": "Apache-2.0",
   "homepage": "https://github.com/Locaryn/morph-text-analysis",
@@ -58,18 +58,19 @@
         "tag": "locaryn-text-analysis-panel",
         "hint": "Classification de sentiment et extraction d'entités"
       }
-    ],
-    "nav_items": [
-      {
-        "id": "studio",
-        "label": "Studio de génération",
-        "icon": "image"
-      }
     ]
   },
   "beta": true,
   "stability": "untested",
   "versions": [
+    {
+      "version": "2.2.0",
+      "is_beta": false,
+      "summary": "L'analyse de tonalite est desormais reellement implementee (via le modele de langage local, plus de resultat fige). Le panneau Studio echoue franchement au lieu d'afficher un resultat fabrique quand le pont d'extension est indisponible.",
+      "tag": "v2.2.0",
+      "released_at": "2026-09-17",
+      "install_source": "Locaryn/morph-text-analysis#v2.2.0"
+    },
     {
       "version": "2.1.0-beta.1",
       "is_beta": true,

@@ -35,6 +35,11 @@
   border-radius: var(--radius-sm, 8px); font-weight: 700; font-size: 14px; cursor: pointer;
 }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.error-card {
+  padding: 14px 16px; background: rgba(240, 100, 100, 0.08); border: 1px solid rgba(240, 100, 100, 0.25);
+  border-radius: var(--radius, 12px); color: #f08a8a; font-size: 13px; line-height: 1.5;
+}
+.result-meta { font-size: 11px; color: var(--text-faint, #96a3b8); margin-top: 6px; }
 `;
 
   class LocarynTextAnalysisPanel extends HTMLElement {
@@ -44,23 +49,29 @@
       this.text = "";
       this.isAnalyzing = false;
       this.result = null;
+      this.error = null;
     }
     connectedCallback() { this.render(); }
 
     async analyze() {
       if (!this.text.trim() || this.isAnalyzing) return;
       this.isAnalyzing = true;
+      this.error = null;
+      this.result = null;
       this.render();
       try {
         const bridge = window.locaryn || window.LocarynPluginAPI;
-        if (bridge && bridge.invokeExtensionTool) {
-          const res = await bridge.invokeExtensionTool("analyze_sentiment", { text: this.text });
-          this.result = typeof res === "string" ? JSON.parse(res) : res;
-        } else {
-          this.result = { sentiment: "positif", score: 0.95 };
+        if (!bridge || !bridge.invokeExtensionTool) {
+          throw new Error("Le pont d'extension n'est pas disponible dans ce contexte.");
         }
+        const res = await bridge.invokeExtensionTool("analyze_sentiment", { text: this.text });
+        const parsed = typeof res === "string" ? JSON.parse(res) : res;
+        if (!parsed || typeof parsed.sentiment !== "string" || !parsed.sentiment) {
+          throw new Error("Le moteur n'a rendu aucune tonalité.");
+        }
+        this.result = parsed;
       } catch (err) {
-        alert("Erreur d'analyse: " + err);
+        this.error = err && err.message ? err.message : String(err);
       } finally {
         this.isAnalyzing = false;
         this.render();
@@ -76,7 +87,7 @@
               <div class="icon-box">📊</div>
               <div>
                 <div class="title">Studio Analyse Sémantique</div>
-                <div class="subtitle">Détection de sentiment et extraction d'entités via ModernBERT</div>
+                <div class="subtitle">Classification de tonalité par le modèle de langage local</div>
               </div>
             </div>
             <div class="badge">Actif</div>
@@ -91,10 +102,17 @@
             ${this.isAnalyzing ? "Analyse en cours..." : "Analyser le texte"}
           </button>
 
+          ${this.error ? `<div class="error-card">${this.error}</div>` : ""}
+
           ${this.result ? `
             <div class="field-card" style="margin-top: 10px;">
               <div style="font-size: 14px; font-weight: 700; color: var(--accent);">
-                Résultat : Tonalité ${this.result.sentiment || "analysée"} (Confiance: ${(Number(this.result.score || 0.9) * 100).toFixed(0)}%)
+                Tonalité ${this.result.sentiment} (${(Number(this.result.score || 0) * 100).toFixed(0)}%)
+              </div>
+              <div class="result-meta">
+                Ce pourcentage est la certitude du modèle dans sa propre réponse, pas un score
+                calibré par une classification dédiée : aucun modèle de classification n'est
+                embarqué dans ce morph.
               </div>
             </div>
           ` : ""}
